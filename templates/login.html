@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="static/login.css">
+    <title>{{aim}}</title>
+  </head>
+  <body>
+    {% if msg %}
+      <div class = "msg">
+        ⚠️  {{msg}}
+      </div>
+    {% endif %}
+    <div class="Login">
+      <form method="post">
+        <label for = "user">Username:</label>
+        <input required type = "text" name ="username" placeholder="Enter Username" id="user"><br>
+        <label for = "pass">Password:</label>
+        <input required type = "password" name="pass" id="pass" placeholder="Enter Password"><br>
+
+        {% if aim == "signup" %}
+            <label for = "email">Email:</label>
+            <input required type = "email" name="email" id="email" placeholder="Enter your Email"><br>
+        {% endif %}
+
+        <input type="reset" value="clear">
+        <input type="submit" value={{aim}}>
+    
+      </form>
+    </div>
+    {% if aim == "signup" %}
+    <center>Already have an account? <a href="/">Login</a></center>
+    <div class="warn">
+      <b><u>Note:</u><br>
+        Do not enter any password you use for other websites.
+        Passwords arent hashed and are public for now.
+      </b>
+    </div>
+    {% else %}
+    <center>Not signed in? <a href="/signup">Signup!</a></center>
+    {% endif %}
+  </body>
+</html>

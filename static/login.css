@@ -1,0 +1,39 @@
+.warn {
+    background: lightpink;
+    color: darkred;
+    border-radius: 5px;
+    border-style: solid;
+    margin: 10px auto;
+    width: 60%;
+    padding: 5px;
+  }
+  
+  .Login{
+    border: solid;
+    border-radius: 5px;
+    border-color: lightblue;
+    box-shadow: 0px 0px 8px;
+    margin: 10px auto;
+    width: 60%;
+  }
+  
+  .msg {
+    text-align: center;
+    border: solid;
+    background: lightpink;
+    color: darkred;
+    border-radius: 5px;
+    margin: 5px auto;
+    padding: 5px;
+    width: 60%;
+  }
+  
+  form {
+    text-align: center;
+    padding: 10px;
+  }
+  
+  form input {
+    padding: 2px;
+    margin-bottom: 2px;
+  }
