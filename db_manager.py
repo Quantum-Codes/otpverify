@@ -1,4 +1,4 @@
-import smtplib, datetime, os, dotenv
+import smtplib, os, dotenv, datetime
 import mysql.connector
 from email.message import EmailMessage
 
@@ -68,8 +68,11 @@ class database:
         self.sql.execute("UPDATE login SET session = NULL WHERE session = %s;", (session,))
         self.db.commit()
     
-    def update_session(self, username, session):
-        self.sql.execute("UPDATE login SET session = %s WHERE username = %s;", (session, username))
+    def update_session(self, username, session, invalidate_otp = False):
+        if invalidate_otp:
+            self.sql.execute("UPDATE login SET session = %s, otp = NULL, otp_expiry = NULL WHERE username = %s;", (session, username))
+        else:
+            self.sql.execute("UPDATE login SET session = %s WHERE username = %s;", (session, username))
         self.db.commit()
     
     def verify_user(self, username):
@@ -77,5 +80,5 @@ class database:
         self.db.commit()
     
     def set_otp(self, username, otp):
-        self.sql.execute("UPDATE login SET otp = %s, otp_expiry = %s WHERE username = %s;", (otp, datetime.datetime.now() + datetime.timedelta(hours=3) , username))
+        self.sql.execute("UPDATE login SET otp = %s, otp_expiry = %s WHERE username = %s;", (otp, datetime.datetime.now() + datetime.timedelta(hours=3) , username)) # for some reason, cant pass epoch seconds into TIMESTAMP col
         self.db.commit()

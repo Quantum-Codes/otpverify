@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect, request, make_response
 import db_manager
-import random
+import random, datetime
 
 app = Flask(__name__)
 emailer = db_manager.emailer()
@@ -135,7 +135,7 @@ def logoutpage():
     session = request.cookies.get("session")
     if session:
         db.delete_session(session)
-        return respond("/login", [{"key":"session", "value":"", "expires":0}, {"key":"otp", "value":"", "expires":0}])
+    return respond("/login", [{"key":"session", "value":"", "expires":0}, {"key":"otp", "value":"", "expires":0}])
     
 @app.route("/otpverify", methods = ["GET", "POST"])
 def otpverify():
@@ -150,7 +150,10 @@ def otpverify():
         user = db.get_self(request.cookies.get("otp"))
     
     if request.method == "GET":
-        print(user["otp_expiry"], type(user["otp_expiry"]))
+        if user["otp_expiry"] < datetime.datetime.now(): #if expired
+            otp = otpgen
+            db.set_otp(user["username"], otp)
+            user["otp"] = otp
         emailer.send_mail(user["email"], message.replace("[otp]", str(user["otp"])))
         return render_template("otpverify.html")
     else:
@@ -160,7 +163,7 @@ def otpverify():
                 return "your email is verified. enabled 2FA.<br>Go to <a href='/'>mainpage</a>"
             else:
                 session = sessiongen()
-                db.update_session(user["username"], session)
+                db.update_session(user["username"], session, invalidate_otp = True)
                 return respond(
             "/",
             [{"key": "session", "value": session, "expires": 7 * 24 * 3600}, {"key":"otp", "value":"", "expires":0}],
