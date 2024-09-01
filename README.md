@@ -20,6 +20,5 @@ CREATE TABLE login (
   otp_expiry timestamp NULL DEFAULT ((unix_timestamp() + (3 * 3600))
 );
 ```
-![image](https://github.com/user-attachments/assets/05f52f44-ba9d-4fff-817a-bca0fd3832cb)
-![image](https://github.com/user-attachments/assets/ee986cc9-a1d9-4f38-b4be-4dea1b8b3236)
+![image](https://github.com/user-attachments/assets/17a0694d-20ec-4243-943a-5a5f6ebc8601)
 
