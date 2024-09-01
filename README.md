@@ -24,4 +24,6 @@ CREATE TABLE login (
 
 
 improvements that could be done:
-hashing passwords using bcrypt and unique constraint on sessions 
+- hashing passwords using bcrypt
+- unique constraint on sessions
+- adding try/except to catch timeouts on email sessions for long term use
