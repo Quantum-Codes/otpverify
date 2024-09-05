@@ -36,8 +36,8 @@ class database:
 
     def add_user(self, user, password, email, otp, session):
         self.sql.execute(
-            "INSERT INTO login (username, password, email, otp, verified, session) VALUES (%s, %s, %s, %s, 0, %s);",
-            (user, password, email, otp, session),
+            "INSERT INTO login (username, password, email, otp, verified, session, otp_expiry) VALUES (%s, %s, %s, %s, 0, %s, %s);",
+            (user, password, email, otp, session, datetime.datetime.now() + datetime.timedelta(hours=3)),
         )
         self.db.commit()
     
